@@ -45,8 +45,8 @@ services:
             - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
-            - '/home/$username/server/configs/homarr:/config
-            - '/home/$username/server/configs/homarr:/icons
+            - '/home/$username/server/configs/homarr:/config'
+            - '/home/$username/server/configs/homarr:/icons'
         ports:
             - '7575:7575'" > /home/$username/server/compose/homarr/docker-compose.yml
 echo 'homarr docker compose created.'
