@@ -1,10 +1,12 @@
 #! /bin/bash
 
+username="$1"
+
 # Update date and time
 echo 'Updating date and time...'
 sudo date -s "$(curl -s --head http://google.com | grep ^Date: | sed 's/Date: //g')"
 echo '
-Date and time updated successfull!'
+Date and time updated successfully!'
 
 # Update the system
 echo 'Updating the system...'
@@ -14,9 +16,9 @@ System updated successfully!'
 
 # Create docker containers
 echo 'Creating directories for docker containers...'
-mkdir /home/$USER/server
-mkdir /home/$USER/server/compose
-cd /home/$USER/server/compose
+mkdir /home/$username/server
+mkdir /home/$username/server/compose
+cd /home/$username/server/compose
 mkdir adguardhome jackett lidarr jellyfin qbittorrent homarr
 echo 'Docker containers created successfully!'
 
@@ -30,7 +32,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
-sudo usermod -aG docker $USER
+sudo usermod -aG docker $username
 
 # Exit now
 echo '

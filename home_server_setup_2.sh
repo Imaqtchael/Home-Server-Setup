@@ -1,5 +1,7 @@
 #! /bin/bash
 
+username="$1"
+
 # Remind user for the setup sequence
 read -p 'This is part 2 of the setup if you have not run the first setup press "ctrl + c" or "ctrl + z" to stop else press enter...' </dev/tty
 
@@ -15,8 +17,8 @@ services:
         container_name: adguardhome
         restart: unless-stopped
         volumes:
-            - '/home/$USER/server/configs/adguardhome/workdir:/opt/adguardhome/work'
-            - '/home/$USER/server/configs/adguardhome/confdir:/opt/adguardhome/conf'
+            - '/home/$username/server/configs/adguardhome/workdir:/opt/adguardhome/work'
+            - '/home/$username/server/configs/adguardhome/confdir:/opt/adguardhome/conf'
         ports:
             - '53:53/tcp'
             - '53:53/udp'
@@ -27,7 +29,7 @@ services:
             - '443:443/tcp'
             - '443:443/udp'
             - '3000:3000/tcp'
-        image: adguard/adguardhome" > /home/$USER/server/compose/adguardhome/docker-compose.yml
+        image: adguard/adguardhome" > /home/$username/server/compose/adguardhome/docker-compose.yml
 echo 'adguardhome docker compose created.'
 
 echo '
@@ -43,10 +45,10 @@ services:
             - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
-            - '/home/$USER/server/configs/homarr:/config
-            - '/home/$USER/server/configs/homarr:/icons
+            - '/home/$username/server/configs/homarr:/config
+            - '/home/$username/server/configs/homarr:/icons
         ports:
-            - '7575:7575'" > /home/$USER/server/compose/homarr/docker-compose.yml
+            - '7575:7575'" > /home/$username/server/compose/homarr/docker-compose.yml
 echo 'homarr docker compose created.'
 
 echo '
@@ -61,11 +63,11 @@ services:
             - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
-            - '/home/$USER/server/configs/jackett:/config'
-            - '/home/$USER/server/torrents:/downloads'
+            - '/home/$username/server/configs/jackett:/config'
+            - '/home/$username/server/torrents:/downloads'
         ports:
             - '9117:9117'
-        restart: unless-stopped" > /home/$USER/server/compose/jackett/docker-compose.yml
+        restart: unless-stopped" > /home/$username/server/compose/jackett/docker-compose.yml
 echo 'jackett docker compose created.'
 
 echo '
@@ -82,9 +84,9 @@ services:
         ports:
             - '8096:8096'
         volumes:
-            - '/home/$USER/server/configs/jellyfin:/config'
-            - '/home/$USER/server/media:/data/media'
-        restart: unless-stopped" > /home/$USER/server/compose/jellyfin/docker-compose.yml
+            - '/home/$username/server/configs/jellyfin:/config'
+            - '/home/$username/server/media:/data/media'
+        restart: unless-stopped" > /home/$username/server/compose/jellyfin/docker-compose.yml
 echo 'jellyfin docker compose created.'
 
 echo '
@@ -99,11 +101,11 @@ services:
             - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
-            - '/home/$USER/server/configs/liadarr:/config'
-            - '/home/$USER/server:/data'
+            - '/home/$username/server/configs/liadarr:/config'
+            - '/home/$username/server:/data'
         ports:
             - '8686:8686'
-        restart: unless-stopped" > /home/$USER/server/compose/lidarr/docker-compose.yml
+        restart: unless-stopped" > /home/$username/server/compose/lidarr/docker-compose.yml
 echo 'lidarr docker compose created.'
 
 echo '
@@ -123,14 +125,14 @@ services:
             - TZ=Asia/Kolkata
             - FLOOD_AUTH=false
         volumes:
-            - '/home/$USER/server/configs/qflood:/config'
-            - '/home/$USER/server/torrents:/data/torrents'
-        restart: unless-stopped" > /home/$USER/server/compose/qbittorrent/docker-compose.yml
+            - '/home/$username/server/configs/qflood:/config'
+            - '/home/$username/server/torrents:/data/torrents'
+        restart: unless-stopped" > /home/$username/server/compose/qbittorrent/docker-compose.yml
 echo 'qbittorrent docker compose created.'
 
 # Build and start those docker containers service
-cd /home/$USER/server
-for folder in compose/*; do cd $folder && sudo docker compose up -d && cd /home/$USER/server; done
+cd /home/$username/server
+for folder in compose/*; do cd $folder && sudo docker compose up -d && cd /home/$username/server; done
 echo "Docker containers are now up and running successfully!"
 echo "You can follow the rest of the guide here: https://www.reddit.com/r/Piracy/comments/pqsomd/the_complete_guide_to_building_your_personal_self/"
 echo "Good luck!"
