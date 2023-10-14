@@ -15,20 +15,19 @@ echo '
 System updated successfully!'
 
 # Create docker containers
-echo 'Creating directories for docker containers...'
+echo 'Creating directories for docker container compose file...'
 mkdir /home/$username/server
 mkdir /home/$username/server/compose
-cd /home/$username/server/compose
-mkdir adguardhome jackett lidarr jellyfin qbittorrent homarr
-echo 'Docker containers created successfully!'
+mkdir /home/$username/server/compose/docker-containers
+echo 'Docker container compose file created successfully!'
 
 # Install docker and docker-compose
 sudo apt-get install ca-certificates curl gnupg apt-transport-https lsb-release
 sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
 echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
